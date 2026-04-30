@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { Target, Sparkles, Footprints } from 'lucide-react';
 import { useWorkoutData } from '../../lib/hooks';
 import { getExercisesForWorkout } from '../../lib/exercise';
 import type { Exercise, ActiveWorkoutType } from '../../lib/types';
@@ -62,10 +63,10 @@ export default function WorkoutPage() {
     navigate('/timer');
   };
 
-  const workoutTypeEmoji: Record<string, string> = {
-    push: '💪',
-    pull: '🎯',
-    legs: '🦵',
+  const workoutTypeIcon: Record<string, React.ReactNode> = {
+    push: <Target className="w-6 h-6" />,
+    pull: <Sparkles className="w-6 h-6" />,
+    legs: <Footprints className="w-6 h-6" />,
   };
 
   return (
@@ -89,7 +90,9 @@ export default function WorkoutPage() {
         <Card className="mb-8 bg-gradient-to-r from-accent/10 to-accent/5 border-accent/30">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4 mb-4">
-              <span className="text-5xl">{workoutTypeEmoji[pplr.nextWorkoutType]}</span>
+              <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-accent/10 border border-accent/20">
+                {workoutTypeIcon[pplr.nextWorkoutType]}
+              </div>
               <div>
                 <p className="text-sm text-muted-foreground">Today&apos;s Workout</p>
                 <h2 className="text-3xl font-bold capitalize">{pplr.nextWorkoutType} Day</h2>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Dumbbell, Target, Footprints, Moon, Settings, Sparkles } from 'lucide-react';
 import { useWorkoutData } from '../../lib/hooks';
 import { RankBadge } from '../../components/rank-badge';
 import { Button } from '../../components/ui/button';
@@ -26,28 +27,32 @@ export default function Home() {
   }
 
   const progressPercentage = (progress.progressionPoints / 400) * 100;
-  const workoutTypeEmoji: Record<string, string> = {
-    push: '💪',
-    pull: '🎯',
-    legs: '🦵',
-    rest: '😴',
+  const workoutTypeIcon: Record<string, React.ReactNode> = {
+    push: <Target className="w-5 h-5" />,
+    pull: <Sparkles className="w-5 h-5" />,
+    legs: <Footprints className="w-5 h-5" />,
+    rest: <Moon className="w-5 h-5" />,
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-card">
       {/* Header */}
-      <header className="border-b border-border bg-gradient-to-r from-card via-card to-card/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+      <header className="border-b border-border/50 bg-card/80 backdrop-blur-xl sticky top-0 z-50 shadow-lg">
         <div className="container mx-auto px-4 py-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="text-4xl">⚔️</div>
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-accent/80 shadow-lg">
+              <Dumbbell className="w-6 h-6 text-accent-foreground" />
+            </div>
             <div>
-              <h1 className="text-3xl font-bold text-foreground tracking-tight">Djinn Gym</h1>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent tracking-tight">
+                Djinn Gym
+              </h1>
               <p className="text-sm text-muted-foreground font-medium">Progression Tracker</p>
             </div>
           </div>
           <Link to="/settings">
-            <Button variant="ghost" size="sm" className="hover:bg-accent/10 transition-colors">
-              ⚙️
+            <Button variant="ghost" size="icon" className="w-12 h-12 rounded-xl hover:bg-accent/10 transition-all duration-200">
+              <Settings className="w-5 h-5" />
             </Button>
           </Link>
         </div>
@@ -129,7 +134,9 @@ export default function Home() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
-              <div className="text-7xl">{workoutTypeEmoji[pplr.nextWorkoutType]}</div>
+              <div className="flex items-center justify-center w-16 h-16 rounded-xl bg-accent/10 border border-accent/20">
+                {workoutTypeIcon[pplr.nextWorkoutType]}
+              </div>
               <div className="flex-1 ml-6">
                 <p className="text-sm text-muted-foreground mb-2 font-medium">
                   PPLR Cycle {pplr.cycle} • Day {pplr.dayInCycle + 1}/4
