@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { useTimer } from '../../lib/hooks';
 import type { Exercise } from '../../lib/types';
 import { Button } from '../../components/ui/button';
@@ -9,9 +9,8 @@ import { Card, CardContent } from '../../components/ui/card';
 import { Separator } from '../../components/ui/separator';
 
 export default function TimerPage() {
-  const router = useRouter();
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [workoutType, setWorkoutType] = useState<string>('');
+  const navigate = useNavigate();
+   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [currentSet, setCurrentSet] = useState(1);
   const [isResting, setIsResting] = useState(false);
@@ -25,15 +24,13 @@ export default function TimerPage() {
   useEffect(() => {
     setMounted(true);
     const stored = sessionStorage.getItem('selectedExercises');
-    const storedType = sessionStorage.getItem('workoutType');
 
-    if (stored && storedType) {
+    if (stored) {
       setExercises(JSON.parse(stored));
-      setWorkoutType(storedType);
     } else {
-      router.push('/');
+      navigate('/');
     }
-  }, [router]);
+  }, [navigate]);
 
   // Handle timer cycles
   useEffect(() => {
@@ -76,7 +73,7 @@ export default function TimerPage() {
   }
 
   const completeWorkout = () => {
-    router.push(`/completion?exercises=${exercises.length}`);
+    navigate(`/completion?exercises=${exercises.length}`);
   };
 
   const formatTime = (sec: number) => {
@@ -184,7 +181,7 @@ export default function TimerPage() {
           <Button
             onClick={() => {
               if (confirm('Are you sure? This will end your workout.')) {
-                router.push('/');
+                navigate('/');
               }
             }}
             variant="outline"

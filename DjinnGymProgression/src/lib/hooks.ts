@@ -29,7 +29,7 @@ export function useWorkoutData() {
     savePPLRCycle(updated);
   };
 
-  const completeWorkout = (duration: number, exerciseCount: number) => {
+  const completeWorkout = (exerciseCount: number) => {
     if (!progress || !pplr) return;
 
     const pointsEarned = Math.min(exerciseCount * 10, 50); // 10 points per exercise, max 50

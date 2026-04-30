@@ -1,18 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate, Link } from 'react-router-dom';
 import { useWorkoutData } from '../../lib/hooks';
 import { getExercisesForWorkout } from '../../lib/exercise';
-import type { Exercise } from '../../lib/types';
+import type { Exercise, ActiveWorkoutType } from '../../lib/types';
 import { getCustomExercises } from '../../lib/storage';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
-import Link from 'next/link';
 
 export default function WorkoutPage() {
-  const router = useRouter();
-  const { progress, pplr, isLoaded, completeWorkout } = useWorkoutData();
+  const navigate = useNavigate();
+  const { pplr, isLoaded } = useWorkoutData();
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([]);
   const [mounted, setMounted] = useState(false);
 
@@ -22,9 +21,9 @@ export default function WorkoutPage() {
 
   useEffect(() => {
     if (isLoaded && pplr && pplr.nextWorkoutType === 'rest') {
-      router.push('/');
+      navigate('/');
     }
-  }, [isLoaded, pplr, router]);
+  }, [isLoaded, pplr, navigate]);
 
   if (!mounted || !isLoaded || !pplr) {
     return (
@@ -36,10 +35,11 @@ export default function WorkoutPage() {
 
   // Use custom exercises if available, otherwise use default library
   const customExercises = getCustomExercises();
-  const hasCustomExercises = customExercises[pplr.nextWorkoutType]?.length > 0;
+  const workoutType = pplr.nextWorkoutType as ActiveWorkoutType;
+  const hasCustomExercises = customExercises[workoutType]?.length > 0;
   const availableExercises = hasCustomExercises 
-    ? customExercises[pplr.nextWorkoutType]
-    : getExercisesForWorkout(pplr.nextWorkoutType);
+    ? customExercises[workoutType]
+    : getExercisesForWorkout(workoutType);
 
   const toggleExercise = (exercise: Exercise) => {
     setSelectedExercises((prev) => {
@@ -59,7 +59,7 @@ export default function WorkoutPage() {
     sessionStorage.setItem('selectedExercises', JSON.stringify(selectedExercises));
     sessionStorage.setItem('workoutType', pplr.nextWorkoutType);
     
-    router.push('/timer');
+    navigate('/timer');
   };
 
   const workoutTypeEmoji: Record<string, string> = {
@@ -73,7 +73,7 @@ export default function WorkoutPage() {
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6 flex items-center justify-between">
-          <Link href="/">
+          <Link to="/">
             <Button variant="ghost" size="sm">
               ← Back
             </Button>

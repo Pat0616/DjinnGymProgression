@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { useWorkoutData } from '../../lib/hooks';
 import { RankBadge } from '../../components/rank-badge';
-import type { ExerciseEditor } from '../../components/exercise-editor';
+import { ExerciseEditor } from '../../components/exercise-editor';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { RANK_THRESHOLDS,  } from '../../lib/types';
@@ -97,7 +97,7 @@ export default function SettingsPage() {
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-6 flex items-center justify-between">
-          <Link href="/">
+          <Link to="/">
             <Button variant="ghost" size="sm">
               ← Back
             </Button>
@@ -200,7 +200,7 @@ export default function SettingsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {ranksArray.map(({ rank, threshold }, index) => {
+              {ranksArray.map(({ rank, threshold }) => {
                 const isCurrentOrPast = progress.progressionPoints >= threshold;
                 const isCurrent = progress.currentRank === rank;
 

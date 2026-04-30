@@ -1,4 +1,4 @@
-import type { UserProgress, PPLRCycle, WorkoutType, Exercise, CustomExercises } from './types';
+import type { UserProgress, PPLRCycle, WorkoutType, ActiveWorkoutType, Exercise, CustomExercises } from './types';
 
 const STORAGE_KEYS = {
   USER_PROGRESS: 'djinn_gym_progress',
@@ -132,13 +132,13 @@ export function saveCustomExercises(exercises: CustomExercises): void {
   }
 }
 
-export function addExercise(workoutType: WorkoutType, exercise: Exercise): void {
+export function addExercise(workoutType: ActiveWorkoutType, exercise: Exercise): void {
   const custom = getCustomExercises();
   custom[workoutType].push(exercise);
   saveCustomExercises(custom);
 }
 
-export function updateExercise(workoutType: WorkoutType, exerciseId: string, updates: Partial<Exercise>): void {
+export function updateExercise(workoutType: ActiveWorkoutType, exerciseId: string, updates: Partial<Exercise>): void {
   const custom = getCustomExercises();
   const index = custom[workoutType].findIndex(e => e.id === exerciseId);
   if (index !== -1) {
@@ -147,7 +147,7 @@ export function updateExercise(workoutType: WorkoutType, exerciseId: string, upd
   }
 }
 
-export function deleteExercise(workoutType: WorkoutType, exerciseId: string): void {
+export function deleteExercise(workoutType: ActiveWorkoutType, exerciseId: string): void {
   const custom = getCustomExercises();
   custom[workoutType] = custom[workoutType].filter(e => e.id !== exerciseId);
   saveCustomExercises(custom);

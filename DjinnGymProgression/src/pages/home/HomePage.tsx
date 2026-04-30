@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { useWorkoutData } from '../../lib/hooks';
 import { RankBadge } from '../../components/rank-badge';
 import { Button } from '../../components/ui/button';
@@ -45,7 +45,7 @@ export default function Home() {
               <p className="text-xs text-muted-foreground">Progression Tracker</p>
             </div>
           </div>
-          <Link href="/settings">
+          <Link to="/settings">
             <Button variant="ghost" size="sm">
               ⚙️
             </Button>
@@ -145,7 +145,7 @@ export default function Home() {
         {/* CTA Buttons */}
         <div className="grid grid-cols-2 gap-4">
           {pplr.nextWorkoutType !== 'rest' ? (
-            <Link href="/workout" className="col-span-2">
+            <Link to="/workout" className="col-span-2">
               <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-6 text-lg">
                 Start Workout
               </Button>

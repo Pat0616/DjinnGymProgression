@@ -1,16 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useWorkoutData } from '../../lib/hooks';
 import { RankBadge } from '../../components/rank-badge';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
-import Link from 'next/link';
 
 export default function CompletionContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
   const { progress, isLoaded, completeWorkout } = useWorkoutData();
   const [completed, setCompleted] = useState(false);
 
@@ -18,7 +16,7 @@ export default function CompletionContent() {
 
   useEffect(() => {
     if (isLoaded && !completed) {
-      completeWorkout(0, exerciseCount);
+      completeWorkout(exerciseCount);
       setCompleted(true);
       // Clear session storage
       sessionStorage.removeItem('selectedExercises');
@@ -134,12 +132,12 @@ export default function CompletionContent() {
 
         {/* Action Buttons */}
         <div className="w-full space-y-3">
-          <Link href="/" className="block">
+          <Link to="/" className="block">
             <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-6">
               Return to Home
             </Button>
           </Link>
-          <Link href="/settings" className="block">
+          <Link to="/settings" className="block">
             <Button variant="outline" className="w-full py-6">
               View Progress
             </Button>
