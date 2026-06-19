@@ -44,7 +44,7 @@ export default function Home() {
               <Dumbbell className="w-6 h-6 text-accent-foreground" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent tracking-tight">
+              <h1 className="text-3xl font-bold text-black tracking-tight">
                 Djinn Gym
               </h1>
               <p className="text-sm text-muted-foreground font-medium">Progression Tracker</p>

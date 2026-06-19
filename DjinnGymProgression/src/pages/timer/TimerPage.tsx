@@ -16,7 +16,7 @@ export default function TimerPage() {
   const [isResting, setIsResting] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  const ACTIVE_TIME = 90; // 1:20 - work time per set
+  const ACTIVE_TIME = 45; // 1:20 - work time per set
   const REST_TIME = 90; // 1:30 - rest time between sets
   const timerDuration = isResting ? REST_TIME : ACTIVE_TIME;
   const { seconds, isActive, toggleTimer, resetTimer } = useTimer(timerDuration);
